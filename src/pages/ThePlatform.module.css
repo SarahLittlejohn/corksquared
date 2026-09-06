@@ -1,17 +1,19 @@
 .main {
   min-height: 100dvh;
   padding: clamp(3rem, 12vh, 8rem) var(--page-padding) clamp(4rem, 14vh, 9rem);
+  background-color: #543421;
   /*
-   * A single gradient across the whole document, not per-viewport: the page
-   * lightens gradually as the visitor scrolls towards the closing message.
+   * A cork board: a seamless cork photo, tiled, with a flat dark overlay so
+   * the board reads consistently behind the cream text at any scroll
+   * position. CSS-only noise/gradient attempts (fractal noise, gradient dot
+   * grids) rendered too faint or too regular to read as cork, so this uses
+   * a real texture instead.
    */
-  background-image: linear-gradient(
-    to bottom,
-    var(--midnight-violet) 0%,
-    var(--midnight-violet) 30%,
-    var(--vintage-grape) 100%
-  );
-  background-repeat: no-repeat;
+  background-image: linear-gradient(rgb(30 16 6 / 40%), rgb(30 16 6 / 40%)), url('../assets/cork-texture.webp');
+  background-repeat: no-repeat, repeat;
+  background-size:
+    100% 100%,
+    900px auto;
 }
 
 /* The heading scrolls away with the content rather than sticking. */
@@ -28,10 +30,28 @@
 }
 
 .gallery {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--photo-gap);
+  columns: 1;
+  column-gap: 1.25rem;
+  max-width: 1400px;
+  margin-inline: auto;
+}
+
+@media (min-width: 560px) {
+  .gallery {
+    columns: 2;
+  }
+}
+
+@media (min-width: 900px) {
+  .gallery {
+    columns: 3;
+  }
+}
+
+@media (min-width: 1300px) {
+  .gallery {
+    columns: 4;
+  }
 }
 
 .empty {

@@ -16,6 +16,7 @@ export function RevealPhoto({ photo, eager = false }: Props) {
       ref={ref}
       className={`${styles.figure} ${isVisible ? styles.isVisible : ''}`}
     >
+      <span className={styles.pin} aria-hidden="true" />
       <img
         className={styles.image}
         src={photo.url}

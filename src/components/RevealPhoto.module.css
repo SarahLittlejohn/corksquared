@@ -1,40 +1,84 @@
 .figure {
-  margin: 0;
+  --tilt: 0deg;
+  --pin-tilt: -6deg;
+  position: relative;
+  margin: 0 0 1.25rem;
+  padding-top: 22px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
+  break-inside: avoid;
 
   opacity: 0;
-  transform: translateY(40px) scale(0.98);
+  transform: translateY(24px) scale(0.98) rotate(var(--tilt));
   transition:
     opacity var(--reveal-duration) ease-out,
     transform var(--reveal-duration) var(--ease-out-expo);
   will-change: opacity, transform;
 }
 
+/*
+ * A slight, deterministic tilt per photo gives the board a hand-pinned
+ * scrapbook feel instead of a uniform grid; --pin-tilt varies the cork's own
+ * angle independently so they don't all lean the same way as their photo.
+ */
+.figure:nth-child(4n + 1) {
+  --tilt: -1.5deg;
+  --pin-tilt: -10deg;
+}
+
+.figure:nth-child(4n + 2) {
+  --tilt: 1deg;
+  --pin-tilt: 6deg;
+}
+
+.figure:nth-child(4n + 3) {
+  --tilt: -0.75deg;
+  --pin-tilt: -5deg;
+}
+
+.figure:nth-child(4n) {
+  --tilt: 1.5deg;
+  --pin-tilt: 9deg;
+}
+
 .isVisible {
   opacity: 1;
-  transform: none;
+  transform: rotate(var(--tilt));
+}
+
+/* Cork image: pngimg.com/image/97780, CC BY-NC 4.0. */
+.pin {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 15px;
+  height: 28px;
+  transform: translateX(-50%) rotate(var(--pin-tilt));
+  background-image: url('../assets/cork-pin.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 3px 3px rgb(0 0 0 / 45%));
+  z-index: 1;
 }
 
 .image {
-  max-height: 85dvh;
-  max-width: min(900px, 92vw);
-  width: auto;
+  display: block;
+  width: 100%;
   height: auto;
-  border: 1px solid var(--vintage-grape);
-  border-radius: 2px;
+  border: 6px solid #f1ecce;
+  border-radius: 1px;
   background-color: color-mix(in srgb, var(--midnight-violet) 70%, black);
+  box-shadow: 0 8px 16px rgb(0 0 0 / 45%);
 }
 
 .caption {
   color: var(--light-blue);
   font-family: var(--font-body);
-  font-size: clamp(0.875rem, 3vw, 1rem);
+  font-size: clamp(0.8rem, 2.4vw, 0.9rem);
   letter-spacing: 0.01em;
   text-align: center;
-  max-width: min(900px, 92vw);
   text-wrap: balance;
 }
 

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Confetti } from '../components/Confetti';
 import { RevealPhoto } from '../components/RevealPhoto';
 import { photos } from '../lib/photos';
 import styles from './ThePlatform.module.css';
@@ -8,7 +9,8 @@ const EAGER_COUNT = 2;
 export function ThePlatform() {
   return (
     <main className={styles.main}>
-      <h1 className={styles.heading}>Happy 30th Birthday Zach!</h1>
+      <Confetti />
+      <h1 className={styles.heading}>Happy 30th Birthday Zach!!!</h1>
 
       {photos.length > 0 ? (
         <div className={styles.gallery}>
