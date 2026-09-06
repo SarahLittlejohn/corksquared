@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.DS_Store
+*.local
+
+# Original, unprocessed photos. Run `npm run photos:optimise` to generate
+# the web-ready files in src/photos/.
+photos-raw/
+
+# Generated at build time by scripts/photo-dimensions.mjs.
+src/photos/dimensions.json
+src/photos/source-map.json

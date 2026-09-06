@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#331832" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="description" content="A birthday page for Zach." />
+    <title>Happy 30th Birthday Zach</title>
+
+    <!--
+      Both headline moments use Fraunces, so preload its Latin subset: without
+      this the fallback serif paints first and the swap shifts the page.
+    -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="/node_modules/@fontsource-variable/fraunces/files/fraunces-latin-wght-normal.woff2"
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      crossorigin
+      href="/node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2"
+    />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

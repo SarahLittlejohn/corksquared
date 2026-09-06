@@ -1,0 +1,35 @@
+{
+  "name": "corksquared",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "photos:dimensions": "node scripts/photo-dimensions.mjs",
+    "photos:optimise": "node scripts/optimise-photos.mjs",
+    "predev": "npm run photos:dimensions",
+    "dev": "vite",
+    "prebuild": "npm run photos:dimensions",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit false --force"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.1.1",
+    "@fontsource-variable/inter": "^5.1.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^6.1.1",
+    "sharp": "^0.35.4",
+    "typescript": "^5.6.3",
+    "vite": "^8.2.2"
+  }
+}
