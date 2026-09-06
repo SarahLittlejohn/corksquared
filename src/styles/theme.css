@@ -1,0 +1,26 @@
+:root {
+  /* Palette */
+  --midnight-violet: #331832;
+  --vintage-grape: #694d75;
+  --dusk-blue: #1b5299;
+  --light-blue: #9fc2cc;
+  --cornsilk: #f1ecce;
+
+  /* Type */
+  --font-display: 'Fraunces Variable', 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Rhythm */
+  --photo-gap: clamp(6rem, 18vh, 14rem);
+  --page-padding: 1.25rem;
+
+  /* Motion */
+  --reveal-duration: 700ms;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --page-padding: 2.5rem;
+  }
+}

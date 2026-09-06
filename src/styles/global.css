@@ -1,0 +1,44 @@
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/inter';
+@import './theme.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--midnight-violet);
+  color: var(--cornsilk);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--light-blue);
+}
+
+:focus-visible {
+  outline: 3px solid var(--light-blue);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* Colour is never the sole carrier of meaning: links keep an underline. */
+a:not([class]) {
+  text-underline-offset: 0.25em;
+}
