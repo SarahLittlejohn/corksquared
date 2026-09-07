@@ -9,9 +9,10 @@
   "scripts": {
     "photos:dimensions": "node scripts/photo-dimensions.mjs",
     "photos:optimise": "node scripts/optimise-photos.mjs",
-    "predev": "npm run photos:dimensions",
+    "photos:web": "node scripts/optimise-gallery-photos.mjs",
+    "predev": "npm run photos:web && npm run photos:dimensions",
     "dev": "vite",
-    "prebuild": "npm run photos:dimensions",
+    "prebuild": "npm run photos:web && npm run photos:dimensions",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit false --force"

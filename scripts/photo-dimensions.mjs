@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 /**
- * Writes `src/photos/dimensions.json`, mapping each photo filename to its
- * intrinsic width and height. The gallery puts those on the `<img>` elements so
- * the browser reserves the right box and nothing shifts as photos load.
+ * Writes `src/photos-optimised/dimensions.json`, mapping each optimised photo
+ * filename to its intrinsic width and height. The gallery puts those on the
+ * `<img>` elements so the browser reserves the right box and nothing shifts
+ * as photos load.
  *
- * Runs automatically before `npm run dev` and `npm run build`. The output is
+ * Runs automatically before `npm run dev` and `npm run build`, after the
+ * photos:web step has produced the optimised files this reads. The output is
  * gitignored: it is derived from the photos themselves.
  *
  * Reads the image headers directly rather than pulling in sharp, so this stays
@@ -15,7 +17,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const photosDir = path.join(root, 'src', 'photos');
+const photosDir = path.join(root, 'src', 'photos-optimised');
 const outFile = path.join(photosDir, 'dimensions.json');
 
 const EXTENSIONS = /\.(jpe?g|png|webp|avif)$/i;

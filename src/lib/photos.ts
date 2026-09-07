@@ -1,5 +1,5 @@
 export type Photo = {
-  /** File name as it appears in `src/photos/`, e.g. `001.webp`. */
+  /** File name as it appears in `src/photos-optimised/`, e.g. `001.webp`. */
   name: string;
   /** Hashed, build-time URL for the asset. */
   url: string;
@@ -14,7 +14,7 @@ export type Photo = {
 
 type Dimensions = Record<string, { width: number; height: number }>;
 
-const modules = import.meta.glob('../photos/*.{jpg,jpeg,png,webp,avif}', {
+const modules = import.meta.glob('../photos-optimised/*.webp', {
   eager: true,
   query: '?url',
   import: 'default',
@@ -30,7 +30,7 @@ const captionModules = import.meta.glob('../photos/captions.json', {
   import: 'default',
 }) as Record<string, Record<string, string>>;
 
-const dimensionModules = import.meta.glob('../photos/dimensions.json', {
+const dimensionModules = import.meta.glob('../photos-optimised/dimensions.json', {
   eager: true,
   import: 'default',
 }) as Record<string, Dimensions>;

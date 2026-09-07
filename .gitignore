@@ -8,5 +8,8 @@ dist/
 photos-raw/
 
 # Generated at build time by scripts/photo-dimensions.mjs.
-src/photos/dimensions.json
 src/photos/source-map.json
+
+# Web-optimised copies of src/photos/, generated at build time by
+# scripts/optimise-gallery-photos.mjs (including its own dimensions.json).
+src/photos-optimised/
