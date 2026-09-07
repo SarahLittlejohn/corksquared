@@ -8,12 +8,17 @@
  * cache derived from the originals in `src/photos/`, which stay the
  * committed source of truth.
  *
- * A file is skipped when its output already exists and is newer than the
- * source, so repeat builds only touch newly added or changed photos.
+ * A file is skipped when a manifest (.cache.json, gitignored alongside the
+ * rest of this directory) shows its source's size and mtime are unchanged
+ * since the last conversion, so repeat builds only touch newly added or
+ * changed photos. Comparing against the *output's* mtime isn't enough on its
+ * own: renaming a source (e.g. to reorder the gallery) can make it collide
+ * with an unrelated pre-existing output of the same name, which would then
+ * look "up to date" by mtime alone while actually holding stale content.
  * Optimised files with no matching source any more (the original was
  * renamed or deleted) are removed.
  */
-import { mkdir, readdir, rm, stat } from 'node:fs/promises';
+import { mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
@@ -21,6 +26,7 @@ import sharp from 'sharp';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const sourceDir = path.join(root, 'src', 'photos');
 const outDir = path.join(root, 'src', 'photos-optimised');
+const manifestPath = path.join(outDir, '.cache.json');
 
 const MAX_EDGE = 1600;
 const QUALITY = 80;
@@ -36,12 +42,12 @@ async function listSources() {
     .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
 }
 
-async function isUpToDate(sourcePath, outPath) {
-  const [sourceStat, outStat] = await Promise.all([
-    stat(sourcePath),
-    stat(outPath).catch(() => null),
-  ]);
-  return outStat !== null && outStat.mtimeMs >= sourceStat.mtimeMs;
+async function readManifest() {
+  try {
+    return JSON.parse(await readFile(manifestPath, 'utf8'));
+  } catch {
+    return {};
+  }
 }
 
 async function removeOrphans(sourceNames) {
@@ -59,14 +65,23 @@ async function main() {
   await mkdir(outDir, { recursive: true });
 
   const sources = await listSources();
+  const previousManifest = await readManifest();
+  const manifest = {};
   let converted = 0;
   let skipped = 0;
 
   for (const name of sources) {
     const sourcePath = path.join(sourceDir, name);
     const outPath = path.join(outDir, outputName(name));
+    const sourceStat = await stat(sourcePath);
+    const fingerprint = `${sourceStat.size}:${sourceStat.mtimeMs}`;
+    const outputExists = await stat(outPath).then(
+      () => true,
+      () => false,
+    );
 
-    if (await isUpToDate(sourcePath, outPath)) {
+    if (outputExists && previousManifest[name] === fingerprint) {
+      manifest[name] = fingerprint;
       skipped += 1;
       continue;
     }
@@ -82,9 +97,11 @@ async function main() {
       .webp({ quality: QUALITY })
       .toFile(outPath);
 
+    manifest[name] = fingerprint;
     converted += 1;
   }
 
+  await writeFile(manifestPath, JSON.stringify(manifest));
   const removed = await removeOrphans(sources);
 
   console.log(
